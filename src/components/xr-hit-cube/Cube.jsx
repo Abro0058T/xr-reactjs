@@ -2,19 +2,19 @@ import { OrbitControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber';
 import React, { useRef } from 'react'
 
-function Cube() {
+function Cube({position}) {
 
     const cubeRef = useRef()
 
     useFrame((state,delta)=>{
-        cubeRef.current.rotation.y +=0.005
+        cubeRef.current.rotation.y +=delta
         });
   return (
     <>
     <OrbitControls/>
     <ambientLight/>
-    <mesh ref={cubeRef}>
-        <boxGeometry />
+    <mesh ref={cubeRef} position={position}>
+        <boxGeometry args={[0.5,0.5,0.5]}/>
         <meshStandardMaterial color={"mediumpurple"}/>
     </mesh>
     </>
