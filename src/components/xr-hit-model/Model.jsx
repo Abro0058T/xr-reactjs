@@ -24,21 +24,22 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF('/model/koreanwinggltf.gltf')
+  const { nodes, materials } = useGLTF('/model/pizzaWebCompressgltfEmb2.gltf')
   console.log(nodes, materials,"nodes and materials")
+  console.log(nodes[Object.keys(nodes)[1]].geometry,materials[Object.keys(materials)[1]])
   return (
     <group {...props} dispose={null}>
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.Mesh_0007.geometry}
-        material={materials['Material_0.008']}
+        geometry={nodes[Object.keys(nodes)[1]].geometry}
+        material={materials[Object.keys(materials)[0]]}
       />
     </group>
   )
 }
 
-useGLTF.preload('/model/koreanwingglft.glft')
+useGLTF.preload('/model/pizzaWebCompressgltfEmb2.gltf')
 
 
 /*
