@@ -7,7 +7,14 @@ import { useThree } from "@react-three/fiber";
 function XrHitCube() {
   const reticleRef = useRef();
   const [cubes,setCubes] = useState([])
-  
+  const {isPresenting} = useXR()
+
+  useThree(({camera})=>{
+    if(!isPresenting) {
+      camera.position.z=3;
+    }
+  })
+
   useHitTest((hitMatrix, hit) => {
     hitMatrix.decompose(
       reticleRef.current.position,
@@ -27,15 +34,18 @@ function XrHitCube() {
     <>
       <OrbitControls />
       <ambientLight />
-      {cubes.map(({position,id})=>{
+      {isPresenting && cubes.map(({position,id})=>{
         return <Cube key={id} position={position}/>
       })}
-      <Interactive onSelect={placeCube}>
+    {isPresenting &&  <Interactive onSelect={placeCube}>
       <mesh ref={reticleRef} rotation-x={-Math.PI / 2}>
         <ringGeometry args={[0.1, 0.25, 32]} />
         <meshStandardMaterial color={"white"} />
       </mesh>
-      </Interactive>
+      </Interactive>}
+      {
+        !isPresenting && <Cube/> 
+      }
     </>
   );
 }

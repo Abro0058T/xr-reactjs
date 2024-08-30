@@ -1,13 +1,20 @@
 import { OrbitControls } from "@react-three/drei";
 import { Interactive, useHitTest, useXR } from "@react-three/xr";
 import React, { useRef, useState } from "react";
-import Model from "./Model";
 import { useThree } from "@react-three/fiber";
+import Model from "./Model";
 
 function XrHitModel() {
   const reticleRef = useRef();
   const [cubes,setCubes] = useState([])
-  
+  const {isPresenting} = useXR()
+
+  useThree(({camera})=>{
+    if(!isPresenting) {
+      camera.position.z=3;
+    }
+  })
+
   useHitTest((hitMatrix, hit) => {
     hitMatrix.decompose(
       reticleRef.current.position,
@@ -27,15 +34,18 @@ function XrHitModel() {
     <>
       <OrbitControls />
       <ambientLight />
-      {cubes.map(({position,id})=>{
+      {isPresenting && cubes.map(({position,id})=>{
         return <Model key={id} position={position}/>
       })}
-      <Interactive onSelect={placeCube}>
+    {isPresenting &&  <Interactive onSelect={placeCube}>
       <mesh ref={reticleRef} rotation-x={-Math.PI / 2}>
         <ringGeometry args={[0.1, 0.25, 32]} />
         <meshStandardMaterial color={"white"} />
       </mesh>
-      </Interactive>
+      </Interactive>}
+      {
+        !isPresenting && <Model/> 
+      }
     </>
   );
 }

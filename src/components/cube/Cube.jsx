@@ -1,31 +1,25 @@
-import { OrbitControls, useGLTF } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber';
-import React, { useRef } from 'react'
-
+import { OrbitControls, useGLTF, useTexture } from '@react-three/drei'
+import { useFrame, useLoader } from '@react-three/fiber';
+import React, { useEffect, useRef } from 'react' 
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 function Cube(props) {
 
-  const { nodes, materials } = useGLTF('/model/koreanwinggltf.gltf')
-    const cubeRef = useRef()
+  const { nodes, materials } = useGLTF('/model/pizzaWebCompressgltfEmb2.gltf')
+ 
+  
 
-    useFrame((state,delta)=>{
-        cubeRef.current.rotation.y +=0.005
-        });
   return (
     <>
     <OrbitControls/>
     <ambientLight/>
-    {/* <mesh ref={cubeRef}>
-        <boxGeometry />
-        <meshStandardMaterial color={"mediumpurple"}/>
-    </mesh> */}
-     {/* <group {...props} dispose={null}> */}
-      <mesh ref={cubeRef}
+     <group {...props} dispose={null}>
+      <mesh 
         castShadow
         receiveShadow
-        geometry={nodes.Mesh_0007.geometry}
-        material={materials['Material_0.008']}
+        geometry={nodes[Object.keys(nodes)[1]].geometry}
+        material={materials[Object.keys(materials)[0]]}
       ></mesh>
-    {/* </group> */}
+    </group>
     </>
   )
 }
