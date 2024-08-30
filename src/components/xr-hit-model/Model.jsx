@@ -3,9 +3,9 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import React, { useEffect, useRef } from 'react' 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 function Model(props) {
-
-  const { nodes, materials } = useGLTF('/model/ramenemb.gltf')
- 
+  // console.log(model)
+  const { nodes, materials } = useGLTF(`/model/${props.model}.gltf`)
+ console.log(nodes,"nodes")
   
 
   return (

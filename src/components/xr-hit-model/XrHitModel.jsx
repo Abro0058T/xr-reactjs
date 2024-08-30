@@ -4,11 +4,10 @@ import React, { useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import Model from "./Model";
 
-function XrHitModel() {
+function XrHitModel({model}) {
   const reticleRef = useRef();
   const [cubes,setCubes] = useState([])
   const {isPresenting} = useXR()
-
   useThree(({camera})=>{
     if(!isPresenting) {
       camera.position.z=3;
@@ -35,7 +34,7 @@ function XrHitModel() {
       <OrbitControls />
       <ambientLight />
       {isPresenting && cubes.map(({position,id})=>{
-        return <Model key={id} position={position}/>
+        return <Model key={id} position={position} model={model}/>
       })}
     {isPresenting &&  <Interactive onSelect={placeCube}>
       <mesh ref={reticleRef} rotation-x={-Math.PI / 2}>
@@ -44,7 +43,7 @@ function XrHitModel() {
       </mesh>
       </Interactive>}
       {
-        !isPresenting && <Model/> 
+        !isPresenting && <Model scale={[6,6,6]}  rotation-x={(-Math.PI/4)-5} rotation-y={(-Math.PI/3)} model={model}/> 
       }
     </>
   );

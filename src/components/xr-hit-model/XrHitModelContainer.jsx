@@ -1,9 +1,11 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import React from "react";
+import React, { useState } from "react";
 import XrHitModel from "./XrHitModel";
 import { ARButton, XR } from "@react-three/xr";
+import Interface from "./Interface";
 function XrHitModelContainer() {
+  const [modelName, setModelName] = useState("koreanwinggltf")
   return (
     <>
       <ARButton sessionInit={
@@ -13,9 +15,10 @@ function XrHitModelContainer() {
       } />
       <Canvas>
         <XR>
-          <XrHitModel />
+          <XrHitModel  model={modelName}/>
         </XR>
       </Canvas>
+      <Interface setModel={setModelName}/>
     </>
   );
 }
