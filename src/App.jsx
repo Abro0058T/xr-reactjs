@@ -9,10 +9,6 @@ function App() {
   return <div className="mainDiv">
     <Routes>
       <Route path="/" element={<XrHitModelContainer/>} />
-      <Route path="/cube" element={<CubeContainer/>} />
-      <Route path="/xr-cube" element={<XrCubeContainer/>} />
-      <Route path="/xr-hit-cube" element={<XrHitCubeContainer/>} />
-      <Route path="/xr-hit-model" element={<XrHitModelContainer/>} />
 
     </Routes>
   </div>;
